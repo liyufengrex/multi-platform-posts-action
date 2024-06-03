@@ -45,15 +45,8 @@ async function main(): Promise<void> {
       </li>`
     }, '')
     const platformSvgUrl = getAssetUrl(iconUrl[PLAT_FORM])
-    const appendHtml = `
-  <table align="center">
-      <tr>
-        <td align="center" width="800px" valign="top">
-          <div align="center"><img src='${platformSvgUrl}' alt='${PLAT_FORM}'/></div>\n<ul>${reduceText}\n</ul>
-        </td>
-      </tr>
-    </table>
-    `
+    const appendHtml = `\n<ul>${reduceText}\n</ul>\n`;
+
 
     core.info(`3. 读取 README, 在 <!-- multi-platform-posts start --> 和 <!-- multi-platform-posts end --> 中间插入生成的 html: \n ${appendHtml}`)
 
