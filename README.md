@@ -31,12 +31,3 @@
 <!-- multi-platform-posts end -->
 ```
 
-2. 拿到不同平台的id，填入下面的baozouai/multi-platform-posts-action@main的user_id
-
-   - 掘金：![](./assets/juejin_id.png)
-
-   - 知乎![](./assets/zhihu_id.png)
-
-   <!--- 语雀 ![](./assets/r_id.png)-->
-
-   - 思否 ![](./assets/segmentfault_id.png)
