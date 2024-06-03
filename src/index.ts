@@ -52,7 +52,7 @@ async function main(): Promise<void> {
 
     const README_PATH = './README.md'
     const res = fs.readFileSync(README_PATH, 'utf-8')
-      .replace(/(?<=<!-- multi-platform-posts start -->)[.\s\S]*?(?=<!-- multi-platform-posts end -->)/, `${appendHtml}`)
+      .replace(/(?<=<!-- rex-platform-posts start -->)[.\s\S]*?(?=<!-- rex-platform-posts end -->)/, `${appendHtml}`)
 
     core.info('4. 修改 README ...')
     fs.writeFileSync(README_PATH, res)
