@@ -4,11 +4,11 @@
   "version": "0.3.0",
   "packageManager": "pnpm@8.3.1",
   "description": "Render multi-platform Posts in readme",
-  "author": "https://github.com/baozouai",
+  "author": "https://github.com/liyufengrex",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/baozouai/multi-platform-posts-action"
+    "url": "https://github.com/liyufengrex/multi-platform-posts-action"
   },
   "keywords": [
     "GitHub",
