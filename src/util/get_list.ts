@@ -13,13 +13,14 @@ async function getJuejinList(user_id: string) {
     })
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
   const postArgs: CommonPost[] = res.body.data.map(({ article_info }: { article_info: JuejinArticleInfo }) => {
-    const { title, ctime, article_id, digg_count, collect_count } = article_info
+    const { title, ctime, article_id, digg_count, collect_count, cover_image } = article_info
     return {
       title,
       publish_time: ctime,
       link: `https://juejin.cn/post/${article_id}`,
       star: Number(digg_count),
       collect: Number(collect_count),
+      cover: cover_image || null,
     }
   })
   return postArgs
@@ -41,6 +42,7 @@ async function getSegmentfaultList(user_id: string) {
       link: `https://segmentfault.com/${url}`,
       star: votes,
       collect: null,
+      cover: null,
     }
   })
   return postArgs
@@ -62,6 +64,7 @@ async function getZhihuList(user_id: string) {
       publish_time: created,
       star: voteupCount,
       collect: null,
+      cover: null,
     }
   })
 
@@ -90,6 +93,7 @@ async function getYuqueList(userName: string) {
       publish_time: seconds,
       star: likes_count,
       collect: null,
+      cover: null,
     }
   })
 

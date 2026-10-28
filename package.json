@@ -20,9 +20,10 @@
   ],
   "main": "lib/index.js",
   "scripts": {
+    "test:juejin": "node --experimental-strip-types tools/print-juejin.mjs",
     "run-res": "pnpm run build && node lib/index.js",
     "watch": "ncc build src/index.ts --watch",
-    "build": "ncc build src/index.ts --license LICENSE --minify --out lib",
+    "build": "ncc build src/index.ts --license LICENSE --minify --out lib && cp src/util/webp_dec.wasm lib/webp_dec.wasm",
     "release": "bumpp",
     "prepare": "husky install",
     "lint": "eslint . --fix"
@@ -30,13 +31,16 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@antfu/eslint-config": "^0.38.6",
+    "@jsquash/webp": "^1.5.0",
     "@vercel/ncc": "^0.36.1",
     "cheerio": "1.0.0-rc.12",
     "fs-extra": "^11.1.1",
+    "pngjs": "^7.0.0",
     "superagent": "^8.0.9"
   },
   "devDependencies": {
     "@types/node": "^20.1.3",
+    "@types/pngjs": "^6.0.5",
     "@types/superagent": "^4.1.17",
     "bumpp": "8.2.0",
     "husky": "^8.0.3"

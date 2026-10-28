@@ -26,8 +26,8 @@
 1. 在 `README` 中任意位置添加标志位
 
 ```markdown
-<!-- multi-platform-posts start -->
+<!-- rex-platform-posts start -->
 这里会插入生成的文章列表
-<!-- multi-platform-posts end -->
+<!-- rex-platform-posts end -->
 ```
 

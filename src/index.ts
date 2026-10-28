@@ -1,9 +1,10 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import * as core from '@actions/core'
 import type { SupportPlatform } from './type'
+import { renderPostCards } from './util/card'
+import { materializeCovers } from './util/cover'
 import getPostList from './util/get_list'
-import { getTimeDiffString } from './util/time'
-import { getAssetUrl } from './util/asset'
 
 const SUPPORT_PLAT_FORM = [
   /** 掘金 */
@@ -16,12 +17,6 @@ const SUPPORT_PLAT_FORM = [
   // 'yuque',
 ]
 
-const iconUrl = {
-  juejin: 'juejin.svg',
-  yuque: 'yuque.png',
-  zhihu: 'zhihu.ico',
-  segmentfault: 'segmentfault.ico',
-}
 async function main(): Promise<void> {
   // 读取参数: 用户 ID
   const USER_ID = core.getInput('user_id')
@@ -37,18 +32,14 @@ async function main(): Promise<void> {
     })!
 
     core.info('2. 生成 html中...')
-    const reduceText = commonPosts.reduce<string>((total, item) => {
-      const { title, publish_time, link, star, collect } = item
-      const time = getTimeDiffString(publish_time)
-      return `${total}\n<li align='left'>[${time} 👍：${star}  ${collect === null ? '' : `⭐：${collect}`}]
-      <a href="${link}" target="_blank">${title}</a>
-      </li>`
-    }, '')
-    const platformSvgUrl = getAssetUrl(iconUrl[PLAT_FORM])
-    const appendHtml = `\n<ul>${reduceText}\n</ul>\n`;
+    const coverDirectory = path.posix.join('assets', 'rex-platform-posts', PLAT_FORM)
+    const covers = await materializeCovers(commonPosts, coverDirectory, (post, error) => {
+      const message = error instanceof Error ? error.message : String(error)
+      core.warning(`封面处理失败，改为只显示标题：${post.title}（${message}）`)
+    })
+    const appendHtml = renderPostCards(commonPosts, covers, coverDirectory)
 
-
-    core.info(`3. 读取 README, 在 <!-- multi-platform-posts start --> 和 <!-- multi-platform-posts end --> 中间插入生成的 html: \n ${appendHtml}`)
+    core.info(`3. 读取 README, 在 <!-- rex-platform-posts start --> 和 <!-- rex-platform-posts end --> 中间插入生成的 html: \n ${appendHtml}`)
 
     const README_PATH = './README.md'
     const res = fs.readFileSync(README_PATH, 'utf-8')

@@ -4,6 +4,8 @@ export interface JuejinArticleInfo {
   article_id: string
   digg_count: string
   collect_count: string
+  /** 封面图，没有封面时为空字符串 */
+  cover_image: string
 }
 
 export interface SegmentfaultArticleInfo {
@@ -42,6 +44,8 @@ export interface CommonPost {
   star: number
   /** 收藏数 */
   collect: number | null
+  /** 封面图，没有封面时为 null */
+  cover: string | null
 }
 
 export type SupportPlatform = 'juejin' | 'zhihu' | 'yuque' | 'segmentfault'

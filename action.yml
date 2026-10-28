@@ -18,5 +18,5 @@ inputs:
 #   time: # output will be available to future steps
 #     description: 'The message to output'
 runs:
-  using: node16
+  using: node20
   main: lib/index.js
