@@ -30,7 +30,7 @@ async function getSegmentfaultList(user_id: string) {
   const res = await superagent
     .get(`https://segmentfault.com/gateway/homepage/${user_id}/articles`)
     .send({
-      size: 10,
+      size: 9,
       sort: 'newest',
     })
   const rows = res.body.rows as SegmentfaultArticleInfo[]
@@ -77,7 +77,7 @@ async function getYuqueList(userName: string) {
 
   const argsStr = res.text.match(/window\.appData = JSON\.parse\(decodeURIComponent\("(.+?)"\)\)/)![1]
   const userId = JSON.parse(decodeURIComponent(argsStr)).user.id as string
-  const res2 = await superagent.get(`https://www.yuque.com/api/events/public?id=${userId}&limit=10&offset=0`)
+  const res2 = await superagent.get(`https://www.yuque.com/api/events/public?id=${userId}&limit=9&offset=0`)
 
   const yuqueArticleInfos = res2.body.data as YuqueArticleInfo[]
 
@@ -100,19 +100,27 @@ async function getYuqueList(userName: string) {
   return postArgs
 }
 
-function getPostList({ user_id, plat_form }: GetPostListProps) {
+const POST_LIMIT = 9
+
+async function getPostList({ user_id, plat_form }: GetPostListProps) {
+  let posts: CommonPost[] | undefined
   switch (plat_form) {
     case 'juejin':
-      return getJuejinList(user_id)
+      posts = await getJuejinList(user_id)
+      break
     case 'segmentfault':
-      return getSegmentfaultList(user_id)
+      posts = await getSegmentfaultList(user_id)
+      break
     case 'zhihu':
-      return getZhihuList(user_id)
+      posts = await getZhihuList(user_id)
+      break
     case 'yuque':
-      return getYuqueList(user_id)
+      posts = await getYuqueList(user_id)
+      break
     default:
       break
   }
+  return posts?.slice(0, POST_LIMIT) ?? []
 }
 
 export default getPostList

@@ -26,9 +26,9 @@ function ensureDecoder() {
   return decoderReady
 }
 
-const CARD_WIDTH = 180
-const CARD_HEIGHT = 101
-const CARD_RADIUS = 8
+const CARD_WIDTH = 640
+const CARD_HEIGHT = 360
+const CARD_RADIUS = 28
 
 interface RgbaImage {
   width: number
@@ -163,9 +163,4 @@ export async function materializeCovers(
   }
 
   return saved
-}
-
-export const coverSize = {
-  width: CARD_WIDTH,
-  height: CARD_HEIGHT,
 }

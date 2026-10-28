@@ -1,6 +1,5 @@
 import path from 'node:path'
 import type { CommonPost } from '../type'
-import { coverSize } from './cover'
 import { getTimeDiffString } from './time'
 
 function escapeHtml(value: string) {
@@ -18,10 +17,10 @@ function renderCell(post: CommonPost, coverFile: string | undefined, directory: 
   const link = escapeHtml(post.link)
   const time = escapeHtml(getTimeDiffString(post.publish_time))
   const cover = coverFile
-    ? `<a href="${link}" target="_blank"><img src="${escapeHtml(path.posix.join(directory, coverFile))}" width="${coverSize.width}" height="${coverSize.height}" alt="${title}"></a><br>\n`
+    ? `<a href="${link}" target="_blank"><img src="${escapeHtml(path.posix.join(directory, coverFile))}" width="100%" alt="${title}"></a><br>\n`
     : ''
 
-  return `<td width="${coverSize.width}" valign="top">
+  return `<td width="33%" valign="top">
       ${cover}<a href="${link}" target="_blank">${title}</a>
       <br>
       ${time}
@@ -34,9 +33,10 @@ export function renderPostCards(posts: CommonPost[], covers: Map<string, string>
     const cells = posts
       .slice(index, index + COLUMNS)
       .map(post => renderCell(post, covers.get(post.link), directory))
-      .join('\n')
-    rows.push(`  <tr>\n${cells}\n  </tr>`)
+    while (cells.length < COLUMNS)
+      cells.push('<td width="33%"></td>')
+    rows.push(`  <tr>\n${cells.join('\n')}\n  </tr>`)
   }
 
-  return `\n<table align="center">\n${rows.join('\n')}\n</table>\n`
+  return `\n<table width="100%">\n${rows.join('\n')}\n</table>\n`
 }
