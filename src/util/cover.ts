@@ -26,9 +26,9 @@ function ensureDecoder() {
   return decoderReady
 }
 
-const CARD_WIDTH = 640
-const CARD_HEIGHT = 360
-const CARD_RADIUS = 16
+const CARD_WIDTH = 180
+const CARD_HEIGHT = 101
+const CARD_RADIUS = 8
 
 interface RgbaImage {
   width: number
